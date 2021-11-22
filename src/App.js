@@ -7,21 +7,19 @@ import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
 import ProfileEdit from './pages/ProfileEdit';
 import NotFound from './pages/NotFound';
-import Loading from './pages/Loading';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact patch="/" component={ Login } />
-          <Route patch="/search" component={ Search } />
-          <Route patch="/album/:id" component={ Album } />
-          <Route patch="/favorites" component={ Favorites } />
-          <Route patch="/profile" component={ Profile } />
-          <Route patch="/profile/edit" component={ ProfileEdit } />
-          <Route patch="*" component={ NotFound } />
-          <Route patch="/loading" component={ Loading } />
+          <Route path="/profile/edit" component={ ProfileEdit } />
+          <Route path="/search" component={ Search } />
+          <Route path="/album/:id" component={ Album } />
+          <Route path="/favorites" component={ Favorites } />
+          <Route path="/profile" component={ Profile } />
+          <Route exact path="/" component={ Login } />
+          <Route path="*" component={ NotFound } />
         </Switch>
       </BrowserRouter>
     );
