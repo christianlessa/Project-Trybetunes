@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from '../pages/Loading';
 
 export default class MusicCard extends Component {
@@ -13,6 +13,18 @@ export default class MusicCard extends Component {
     };
 
     this.saveFavorite = this.saveFavorite.bind(this);
+    this.getFavorite = this.getFavorite.bind(this);
+  }
+
+  componentDidMount() {
+    this.getFavorite();
+  }
+
+  async getFavorite() {
+    const { music: { trackId } } = this.props;
+    const myFavorites = await getFavoriteSongs();
+    myFavorites.some((song) => song.trackId === trackId
+     && this.setState({ checkBox: true }));
   }
 
   async saveFavorite() {
@@ -57,4 +69,4 @@ export default class MusicCard extends Component {
 MusicCard.propTypes = {
   music: PropTypes.string.isRequired,
 };
-// Requisito 7 e 8 feito com ajuda do Denilson Santuchi.
+// Requisito 7, 8 e 9 feito com ajuda do Denilson Santuchi.
