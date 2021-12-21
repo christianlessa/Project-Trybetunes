@@ -20,7 +20,11 @@ export default class Album extends Component {
   }
 
   async getAlbumAPI() {
-    const { match: { params: { id } } } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
     const albumAPI = await getMusics(id);
     this.setState({
       musicList: albumAPI,
@@ -30,24 +34,21 @@ export default class Album extends Component {
   }
 
   render() {
-    const {
-      musicList,
-      name,
-      album,
-    } = this.state;
+    const { musicList, name, album } = this.state;
 
     return (
-      <>
+      <div data-testid="page-album">
         <Header />
         <div>
-          <div data-testid="page-album">
-            <h2 data-testid="artist-name">{name}</h2>
-            <h3 data-testid="album-name">{album}</h3>
-          </div>
-          <MusicCard musicList={ musicList } />
+          <h2 data-testid="artist-name">{name}</h2>
+          <h3 data-testid="album-name">{album}</h3>
         </div>
-
-      </>
+        {musicList.slice([1]).map((music) => (
+          <div key={ music.trackNumber }>
+            <MusicCard music={ music } />
+          </div>
+        ))}
+      </div>
     );
   }
 }

@@ -1,29 +1,60 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { addSong } from '../services/favoriteSongsAPI';
+import Loading from '../pages/Loading';
 
 export default class MusicCard extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isLoading: false,
+      checkBox: false,
+    };
+
+    this.saveFavorite = this.saveFavorite.bind(this);
+  }
+
+  async saveFavorite() {
+    const { music: { trackId } } = this.props;
+    this.setState({
+      isLoading: true,
+      checkBox: true,
+    });
+    await addSong(trackId);
+    this.setState({ isLoading: false });
+  }
+
   render() {
-    const { musicList } = this.props;
-    console.log(musicList);
+    const { music: { trackName, trackId, previewUrl } } = this.props;
+    const { state: { isLoading, checkBox }, saveFavorite } = this;
     return (
       <div>
-        {musicList.slice([1]).map(({ trackName, artistId, previewUrl }) => (
-          <>
-            <h3 key={ artistId }>{trackName}</h3>
-            <audio data-testid="audio-component" src={ previewUrl } controls>
-              <track kind="captions" />
-              O seu navegador não suporta o elemento
-              {' '}
-              <code>audio</code>
-            </audio>
-          </>
-        ))}
+        <span>{trackName}</span>
+        <audio data-testid="audio-component" src={ previewUrl } controls>
+          <track kind="captions" />
+          O seu navegador não suporta o elemento
+          {' '}
+          <code>audio</code>
+        </audio>
+        { isLoading ? <Loading /> : (
+          <label htmlFor="favorite">
+            Favorita
+            <input
+              data-testid={ `checkbox-music-${trackId}` }
+              type="checkbox"
+              id="favorite"
+              checked={ checkBox }
+              onChange={ saveFavorite }
+            />
+          </label>
+        )}
       </div>
     );
   }
 }
 
 MusicCard.propTypes = {
-  musicList: PropTypes.string.isRequired,
+  music: PropTypes.string.isRequired,
 };
-// Requisito 7 feito com ajuda do Denilson Santuchi.
+// Requisito 7 e 8 feito com ajuda do Denilson Santuchi.
