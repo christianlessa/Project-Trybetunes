@@ -36,9 +36,9 @@ export default class Profile extends Component {
   render() {
     const {
       isLoading,
+      image,
       name,
       email,
-      image,
       description } = this.state;
 
     return (
