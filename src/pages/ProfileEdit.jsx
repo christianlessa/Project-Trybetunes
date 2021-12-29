@@ -67,7 +67,6 @@ export default class ProfileEdit extends React.Component {
     return (
       <>
         <Header />
-        <div data-testid="page-profile-edit" />
         { isLoading ? <Loading /> : (
           <div data-testid="page-profile-edit">
             <form>
