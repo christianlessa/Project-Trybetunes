@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from './Header';
 import Loading from './Loading';
 import { getUser, updateUser } from '../services/userAPI';
 
-export default class ProfileEdit extends React.Component {
+export default class ProfileEdit extends Component {
   constructor() {
     super();
 
@@ -56,7 +56,10 @@ export default class ProfileEdit extends React.Component {
     this.setState({ isLoading: true });
     const { user } = this.state;
     await updateUser(user);
-    this.setState({ isLoading: false, updated: true });
+    this.setState({
+      isLoading: false,
+      updated: true,
+    });
   }
 
   render() {
