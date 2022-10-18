@@ -12,7 +12,7 @@ export default class Login extends Component {
       isLoading: false,
       isLoaded: false,
     };
-    this.inputValue = this.inputValue.bind(this);
+
     this.buttonDisable = this.buttonDisable.bind(this);
     this.saveName = this.saveName.bind(this);
   }
